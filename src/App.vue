@@ -2,6 +2,7 @@
   <div id="app">
     <h1 @click="increment">Click Me: {{ count }}</h1>
     <button @click="reset">Reset Counter</button>
+    <h3>Boosted counter: {{ countPlusBoost }}</h3>
     <br />
     <img alt="Vue logo" src="./assets/logo.png" />
     <HelloWorld msg="Welcome to Your Vue.js App" />
@@ -18,8 +19,16 @@ export default {
   components: {
     HelloWorld,
   },
+  data() {
+    return {
+      boost: 100,
+    };
+  },
   computed: {
     ...mapState(["count"]),
+    countPlusBoost(state) {
+      return state.count * this.boost;
+    },
   },
   methods: {
     ...mapMutations(["increment", "reset"]),
