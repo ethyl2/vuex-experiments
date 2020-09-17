@@ -1,19 +1,30 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <h1 @click="increment">Click Me: {{ count }}</h1>
+    <button @click="reset">Reset Counter</button>
+    <br />
+    <img alt="Vue logo" src="./assets/logo.png" />
+    <HelloWorld msg="Welcome to Your Vue.js App" />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import HelloWorld from "./components/HelloWorld.vue";
+
+import { mapState, mapMutations } from "vuex";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
-  }
-}
+    HelloWorld,
+  },
+  computed: {
+    ...mapState(["count"]),
+  },
+  methods: {
+    ...mapMutations(["increment", "reset"]),
+  },
+};
 </script>
 
 <style>
