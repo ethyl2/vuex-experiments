@@ -7,6 +7,19 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   state: {
     count: 0,
+    todos: [
+      { id: 1, text: 'Learn more about Vue', done: true },
+      { id: 2, text: 'Learn more about Vuex', done: false },
+      { id: 3, text: 'Learn more about Vuetify', done: true },
+    ],
+  },
+  getters: {
+    doneTodos: (state) => {
+      return state.todos.filter((todo) => todo.done);
+    },
+    doneTodosCount: (state, getters) => {
+      return getters.doneTodos.length;
+    },
   },
   mutations: {
     increment(state) {
@@ -18,8 +31,6 @@ const store = new Vuex.Store({
   },
 });
 
-//import { mapState } from 'vuex';
-
 Vue.config.productionTip = false;
 
 // store.commit('increment');
@@ -28,20 +39,7 @@ Vue.config.productionTip = false;
 new Vue({
   render: (h) => h(App),
   store,
-  data() {
-    return {
-      localCount: 4,
-    };
-  },
-  //computed: mapState(['count']),
 }).$mount('#app');
 
-/*
-computed: mapState({
-    count: (state) => state.count,
-    countAlias: 'count',
-    countPlusLocalState(state) {
-      return state.count + this.localCount;
-    },
-  }),
-*/
+console.log(store.getters.doneTodos);
+console.log(store.getters.doneTodosCount);

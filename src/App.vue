@@ -3,9 +3,15 @@
     <h1 @click="increment">Click Me: {{ count }}</h1>
     <button @click="reset">Reset Counter</button>
     <h3>Boosted counter: {{ countPlusBoost }}</h3>
+    <ol>
+      <li v-for="todo in todos" v-bind:key="todo.id">{{ todo.text}}</li>
+    </ol>
+    <button @click="toggleShowMore">More about Vue</button>
     <br />
     <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <div v-if="showMore">
+      <HelloWorld msg="More About Vue.js Apps" />
+    </div>
   </div>
 </template>
 
@@ -22,16 +28,20 @@ export default {
   data() {
     return {
       boost: 100,
+      showMore: false,
     };
   },
   computed: {
-    ...mapState(["count"]),
+    ...mapState(["count", "todos"]),
     countPlusBoost(state) {
       return state.count * this.boost;
     },
   },
   methods: {
     ...mapMutations(["increment", "reset"]),
+    toggleShowMore() {
+      this.showMore = !this.showMore;
+    },
   },
 };
 </script>
