@@ -20,6 +20,13 @@ const store = new Vuex.Store({
     doneTodosCount: (state, getters) => {
       return getters.doneTodos.length;
     },
+    getTodoById: (state) => (id) => {
+      const result = state.todos.filter((todo) => todo.id == id);
+      if (result.length < 1) {
+        return [{ id: 0, text: 'Invalid todo ID' }];
+      }
+      return result;
+    },
   },
   mutations: {
     increment(state) {
@@ -39,7 +46,13 @@ Vue.config.productionTip = false;
 new Vue({
   render: (h) => h(App),
   store,
+  computed: {
+    doneTodosCount() {
+      return this.$store.getters.doneTodosCount;
+    },
+  },
 }).$mount('#app');
 
 console.log(store.getters.doneTodos);
 console.log(store.getters.doneTodosCount);
+console.log(store.getters.getTodoById(1));

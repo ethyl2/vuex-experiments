@@ -6,9 +6,17 @@
     <ol>
       <li v-for="todo in todos" v-bind:key="todo.id">{{ todo.text}}</li>
     </ol>
+    <p>Done Todos: {{ doneTodosCount }}</p>
+    <label for="todo-id">Get Todo By Id</label>
+    <input v-model="todoId" type="number" />
+
+    <p>{{ getTodoById(todoId)[0].text }}</p>
+    <br />
     <button @click="toggleShowMore">More about Vue</button>
+
     <br />
     <img alt="Vue logo" src="./assets/logo.png" />
+
     <div v-if="showMore">
       <HelloWorld msg="More About Vue.js Apps" />
     </div>
@@ -18,7 +26,7 @@
 <script>
 import HelloWorld from "./components/HelloWorld.vue";
 
-import { mapState, mapMutations } from "vuex";
+import { mapState, mapMutations, mapGetters } from "vuex";
 
 export default {
   name: "App",
@@ -29,10 +37,12 @@ export default {
     return {
       boost: 100,
       showMore: false,
+      todoId: 1,
     };
   },
   computed: {
     ...mapState(["count", "todos"]),
+    ...mapGetters(["doneTodosCount", "getTodoById"]),
     countPlusBoost(state) {
       return state.count * this.boost;
     },
