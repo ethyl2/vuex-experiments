@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <h1 @click="increment">Click Me: {{ count }}</h1>
+    <h1 @click="increment">Click Me</h1>
+    <img @click="increment" src="./assets/mascot.jpg" alt="vue mascot" class="mascot" />
+    <h2>Clicks: {{ count }}</h2>
     <button @click="increment">
       <span role="img" aria-label="plus">➕</span>
     </button>
@@ -10,7 +12,7 @@
     <button @click="reset">
       <span role="img" aria-label="soap">🧼</span>
     </button>
-    <h3>Boosted counter: {{ countPlusBoost }}</h3>
+    <h3>Points: {{ countPlusBoost }}</h3>
     <ol>
       <li v-for="todo in todos" v-bind:key="todo.id">{{ todo.text}}</li>
     </ol>
@@ -28,6 +30,11 @@
     <div v-if="showMore">
       <HelloWorld msg="More About Vue.js Apps" />
     </div>
+
+    <p>
+      Top image is from
+      <a href="https://twitter.com/vuejsfrankfurt" target="_blank">Vue.js Frankfurt</a>
+    </p>
   </div>
 </template>
 
@@ -90,5 +97,14 @@ label {
 
 input {
   width: 3em;
+}
+
+.mascot {
+  max-width: 10em;
+  transition: all 0.2s ease-in-out;
+}
+
+.mascot:active {
+  transform: scale(1.2);
 }
 </style>
