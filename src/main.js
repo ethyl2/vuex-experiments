@@ -32,6 +32,15 @@ const store = new Vuex.Store({
     increment(state) {
       state.count++;
     },
+    incrementByN(state, n) {
+      state.count += n;
+    },
+    incrementBy(state, payload) {
+      state.count += payload.amount;
+    },
+    decrement(state) {
+      state.count--;
+    },
     reset(state) {
       state.count = 0;
     },
@@ -40,15 +49,29 @@ const store = new Vuex.Store({
 
 Vue.config.productionTip = false;
 
-// store.commit('increment');
-// console.log(store.state.count);
+store.commit('increment');
+console.log(store.state.count);
+store.commit('incrementBy', { amount: 29 });
+console.log(store.state.count);
+store.commit({
+  type: 'incrementBy',
+  amount: 40,
+});
+console.log(store.state.count);
 
 new Vue({
   render: (h) => h(App),
   store,
   computed: {
+    // We're not actually using this. It's just an example.
     doneTodosCount() {
       return this.$store.getters.doneTodosCount;
+    },
+  },
+  methods: {
+    // Another example that isn't used
+    exampleIncrement() {
+      this.$store.commit('increment');
     },
   },
 }).$mount('#app');
@@ -56,3 +79,10 @@ new Vue({
 console.log(store.getters.doneTodos);
 console.log(store.getters.doneTodosCount);
 console.log(store.getters.getTodoById(1));
+
+// Examples of adding a property to an object
+// (A rare thing. You generally want to create all of your properties upfront.)
+/*
+Vue.set(obj, 'newProp', 123)
+state.obj= { ...state.obj, newProp: 123 }
+*/
