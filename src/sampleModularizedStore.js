@@ -32,7 +32,9 @@ const moduleB = {
   modules: {
     subModule: {
       namespaced: true,
-      state: {},
+      state: {
+        count: 100,
+      },
       mutations: {
         login() {},
       },
@@ -48,8 +50,24 @@ const moduleB = {
     count: 8,
   },
   mutations: {},
-  getters: {},
-  actions: {},
+  getters: {
+    someGetter(state, getters, rootState, rootGetters) {
+      rootState.count;
+      state.count;
+    },
+  },
+  actions: {
+    someAction({ dispatch, commit, getters, rootGetters }) {
+      getters.someGetter;
+      rootGetters.someGetter;
+
+      dispatch('someOtherAction');
+      dispatch('someOtherAction', null, { root: true }); // null is the payload
+
+      commit('someMutation');
+      commit('someMutation', null, { root: true }); // null is the payload
+    },
+  },
 };
 
 const store = new Vuex.Store({
@@ -65,11 +83,26 @@ const store = new Vuex.Store({
   actions: {},
 });
 
+import { mapState, mapActions } from 'vuex';
+
 new Vue({
   el: '#app',
   store,
   data: {},
-  computed: {},
+  computed: mapState({
+    a: (state) => state.a.count,
+    b: (state) => state.b.count,
+    subB: (state) => state.b.subModule.count,
+  }),
+  methods: mapActions(['some/nested/module/foo']), // Assuming 'some' is a module, 'nested' is nested within it, and 'module' is nested within that.
+  // And 'foo' is the action.
+  // In our app, access it using this['some/nested/module/foo']()
+  // Another way:
+  /*
+  methods: mapActions('some/nested/module', [
+      'foo'
+  ]) // Access it using this.foo()
+  */
 });
 
 // console.log(store.state.a.count);
