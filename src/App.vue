@@ -12,6 +12,7 @@
     <button @click="reset">
       <span role="img" aria-label="soap">🧼</span>
     </button>
+
     <h3>Points: {{ countPlusBoost }}</h3>
     <ol>
       <li v-for="todo in todos" v-bind:key="todo.id">{{ todo.text}}</li>
@@ -41,7 +42,7 @@
 <script>
 import HelloWorld from "./components/HelloWorld.vue";
 
-import { mapState, mapMutations, mapGetters } from "vuex";
+import { mapState, mapMutations, mapGetters, mapActions } from "vuex";
 
 export default {
   name: "App",
@@ -58,6 +59,7 @@ export default {
   computed: {
     ...mapState(["count", "todos"]),
     ...mapGetters(["doneTodosCount", "getTodoById"]),
+    ...mapActions(["incrementAsync"]),
     countPlusBoost(state) {
       return state.count * this.boost;
     },
